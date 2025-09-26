@@ -22,19 +22,29 @@
     --primary-foreground: 0 0% 100%;
     --primary-glow: 217 91% 60%;
 
-    /* Emergency & Safety colors */
-    --emergency: 0 84% 52%;
-    --emergency-foreground: 0 0% 100%;
-    --emergency-glow: 0 84% 70%;
-    
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    
-    --safe: 120 40% 50%;
-    --safe-foreground: 0 0% 100%;
+  /* Emergency/Alert colors */
+  --emergency: 350 84% 60%;
+  --emergency-foreground: 0 0% 100%;
+  --emergency-glow: 350 84% 70%;
+  
+  /* Warning colors */
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  
+  /* Success colors */
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 100%;
+  
+  /* Safety colors */
+  --safe: 120 60% 50%;
+  --safe-foreground: 0 0% 100%;
+  
+  /* Enhanced gradients */
+  --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 50%, hsl(var(--accent)) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  --gradient-accent-hover: linear-gradient(135deg, hsl(var(--accent)) 20%, hsl(var(--primary)) 80%);
+  --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+  --gradient-interactive: linear-gradient(135deg, hsl(var(--primary)/0.1) 0%, hsl(var(--accent)/0.1) 100%);
 
     /* Secondary palette */
     --secondary: 210 20% 95%;
@@ -139,12 +149,48 @@
   }
 }
 
-@layer utilities {
-  /* Safety monitoring specific animations */
-  .pulse-emergency {
-    animation: pulse-emergency 2s infinite;
+/* Enhanced animations */
+.pulse-emergency {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--emergency-glow) / 0.7);
   }
-  
+  50% {
+    box-shadow: 0 0 0 15px hsl(var(--emergency-glow) / 0);
+  }
+}
+
+/* Interactive hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px hsl(var(--primary) / 0.25);
+}
+
+/* Background gradients */
+.bg-gradient-hero {
+  background: var(--gradient-hero);
+}
+
+.bg-gradient-accent {
+  background: var(--gradient-accent);
+}
+
+.bg-gradient-accent-hover {
+  background: var(--gradient-accent-hover);
+}
+
+.bg-gradient-card {
+  background: var(--gradient-card);
+}
+
+@layer utilities {
   .gradient-primary {
     background: var(--gradient-primary);
   }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Globe, Shield, Users, MapPin } from "lucide-react";
+import { Globe, Shield, Users, MapPin, FileText } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
@@ -20,7 +20,12 @@ const Header = () => {
     { code: "kn", name: "ಕನ್ನಡ" },
     { code: "ml", name: "മലയാളം" },
     { code: "pa", name: "ਪੰਜਾਬੀ" },
-    { code: "or", name: "ଓଡ଼ିଆ" }
+    { code: "or", name: "ଓଡ଼ିଆ" },
+    { code: "ja", name: "日本語" },
+    { code: "es", name: "Español" },
+    { code: "fr", name: "Français" },
+    { code: "de", name: "Deutsch" },
+    { code: "zh", name: "中文" }
   ];
 
   const currentPage = location.pathname;
@@ -35,8 +40,8 @@ const Header = () => {
               <Shield className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Tourist Safety Hub</h1>
-              <p className="text-sm text-muted-foreground">Smart Monitoring & Response</p>
+              <h1 className="text-xl font-bold text-foreground">TRACER</h1>
+              <p className="text-sm text-muted-foreground">Tourist Response & Assistance with Connected Emergency Routines</p>
             </div>
           </div>
 
@@ -56,7 +61,7 @@ const Header = () => {
               className="flex items-center space-x-2"
             >
               <Users className="w-4 h-4" />
-              <span>Admin Portal</span>
+              <span>Tourist Department</span>
             </Button>
             <Button
               variant={currentPage === "/register" ? "default" : "ghost"}
@@ -68,21 +73,31 @@ const Header = () => {
             </Button>
           </nav>
 
-          {/* Language Selector */}
+          {/* E-FIR and Language Selector */}
           <div className="flex items-center space-x-3">
-            <Globe className="w-4 h-4 text-muted-foreground" />
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {languages.map((lang) => (
-                  <SelectItem key={lang.code} value={lang.code}>
-                    {lang.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center space-x-2 bg-gradient-accent text-accent-foreground border-accent/20 hover:bg-gradient-accent-hover shadow-glow transition-smooth"
+            >
+              <FileText className="w-4 h-4" />
+              <span className="hidden sm:inline">E-FIR</span>
+            </Button>
+            <div className="flex items-center space-x-2">
+              <Globe className="w-4 h-4 text-muted-foreground" />
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {languages.map((lang) => (
+                    <SelectItem key={lang.code} value={lang.code}>
+                      {lang.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 
@@ -102,7 +117,7 @@ const Header = () => {
             onClick={() => navigate("/admin")}
             className="flex-1"
           >
-            Admin
+            Tourist Dept
           </Button>
           <Button
             variant={currentPage === "/register" ? "default" : "outline"}

@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Phone, Users, Navigation, Wifi, Battery } from "lucide-react";
+import { MapPin, Phone, Users, Navigation, Wifi, Battery, Share2, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import PanicButton from "@/components/PanicButton";
 import SafetyScore from "@/components/SafetyScore";
 import WeatherWidget from "@/components/WeatherWidget";
+import kazirangaBg from "@/assets/kaziranga-bg.jpg";
 
 const TouristDashboard = () => {
   const [trackingEnabled, setTrackingEnabled] = useState(true);
@@ -32,11 +33,34 @@ const TouristDashboard = () => {
     { name: "Tourist Information Center", distance: "0.1 km", type: "Info" }
   ];
 
+  const handleShareLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const locationUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
+        navigator.share?.({
+          title: 'My Current Location',
+          url: locationUrl
+        }) || navigator.clipboard.writeText(locationUrl);
+      });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div 
+      className="min-h-screen bg-background relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${kazirangaBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      <div className="absolute inset-0 bg-background/70 backdrop-blur-sm"></div>
+      <div className="relative z-10">
+        <Header />
       
-      <main className="container mx-auto px-4 py-6 space-y-6">
+        <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Welcome Section */}
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold text-foreground">Welcome, {touristData.name}</h2>
@@ -48,7 +72,7 @@ const TouristDashboard = () => {
         </div>
 
         {/* Status Bar */}
-        <Card className="shadow-soft">
+        <Card className="shadow-soft bg-gradient-card border-primary/20 hover-lift">
           <CardContent className="py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -84,7 +108,7 @@ const TouristDashboard = () => {
             <WeatherWidget />
 
             {/* Nearby Emergency Services */}
-            <Card className="shadow-card">
+            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Navigation className="w-5 h-5 text-primary" />
@@ -115,7 +139,7 @@ const TouristDashboard = () => {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Panic Button */}
-            <Card className="shadow-card">
+            <Card className="shadow-card bg-gradient-card border-emergency/20 hover-lift">
               <CardHeader>
                 <CardTitle className="text-center text-emergency">Emergency Response</CardTitle>
               </CardHeader>
@@ -125,7 +149,7 @@ const TouristDashboard = () => {
             </Card>
 
             {/* Emergency Contacts */}
-            <Card className="shadow-card">
+            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Phone className="w-5 h-5 text-primary" />
@@ -150,7 +174,7 @@ const TouristDashboard = () => {
             </Card>
 
             {/* Quick Actions */}
-            <Card className="shadow-card">
+            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Users className="w-5 h-5 text-primary" />
@@ -158,17 +182,31 @@ const TouristDashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  <MapPin className="w-4 h-4 mr-2" />
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                  onClick={handleShareLocation}
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
                   Share Location
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                >
                   <Phone className="w-4 h-4 mr-2" />
                   Contact Guide
                 </Button>
                 <Button 
+                  variant="outline" 
+                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  AI Assistant
+                </Button>
+                <Button 
                   variant={trackingEnabled ? "secondary" : "default"}
-                  className="w-full justify-start"
+                  className="w-full justify-start hover-lift"
                   onClick={() => setTrackingEnabled(!trackingEnabled)}
                 >
                   <Navigation className="w-4 h-4 mr-2" />
@@ -178,7 +216,8 @@ const TouristDashboard = () => {
             </Card>
           </div>
         </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
