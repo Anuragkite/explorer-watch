@@ -9,6 +9,7 @@ import {
   TrendingUp, Clock, Shield
 } from "lucide-react";
 import Header from "@/components/Header";
+import kazirangaBg from "@/assets/kaziranga-bg.jpg";
 
 const AdminDashboard = () => {
   const [selectedRole] = useState("tourism"); // "police" or "tourism"
@@ -78,8 +79,16 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className="min-h-screen bg-background relative overflow-hidden"
+         style={{
+           backgroundImage: `url(${kazirangaBg})`,
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundAttachment: 'fixed'
+         }}>
+      <div className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
+      <div className="relative z-10">
+        <Header />
       
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Header Section */}
@@ -104,7 +113,7 @@ const AdminDashboard = () => {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <Card className="shadow-soft">
+          <Card className="shadow-soft gradient-card hover-lift animate-fade-in transition-smooth">
             <CardContent className="p-4 text-center">
               <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
               <p className="text-2xl font-bold text-foreground">{adminStats.totalTourists}</p>
@@ -112,7 +121,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft">
+          <Card className="shadow-soft gradient-card hover-lift animate-fade-in transition-smooth">
             <CardContent className="p-4 text-center">
               <UserCheck className="w-8 h-8 mx-auto mb-2 text-success" />
               <p className="text-2xl font-bold text-foreground">{adminStats.activeTourists}</p>
@@ -120,7 +129,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft">
+          <Card className="shadow-soft gradient-card hover-lift animate-fade-in transition-smooth">
             <CardContent className="p-4 text-center">
               <AlertTriangle className="w-8 h-8 mx-auto mb-2 text-warning" />
               <p className="text-2xl font-bold text-foreground">{adminStats.alerts}</p>
@@ -128,19 +137,19 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft">
+          <Card className="shadow-emergency gradient-emergency hover-lift animate-fade-in transition-smooth">
             <CardContent className="p-4 text-center">
-              <Phone className="w-8 h-8 mx-auto mb-2 text-emergency" />
-              <p className="text-2xl font-bold text-foreground">{adminStats.emergencies}</p>
-              <p className="text-sm text-muted-foreground">Emergencies</p>
+              <Phone className="w-8 h-8 mx-auto mb-2 text-emergency-foreground" />
+              <p className="text-2xl font-bold text-emergency-foreground">{adminStats.emergencies}</p>
+              <p className="text-sm text-emergency-foreground/80">Emergencies</p>
             </CardContent>
           </Card>
 
-          <Card className="shadow-soft">
+          <Card className="shadow-glow gradient-primary hover-lift animate-fade-in transition-smooth">
             <CardContent className="p-4 text-center">
-              <Shield className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <p className="text-2xl font-bold text-foreground">{adminStats.safetyScore}%</p>
-              <p className="text-sm text-muted-foreground">Safety Score</p>
+              <Shield className="w-8 h-8 mx-auto mb-2 text-primary-foreground" />
+              <p className="text-2xl font-bold text-primary-foreground">{adminStats.safetyScore}%</p>
+              <p className="text-sm text-primary-foreground/80">Safety Score</p>
             </CardContent>
           </Card>
         </div>
@@ -171,11 +180,11 @@ const AdminDashboard = () => {
 
             <div className="space-y-3">
               {recentAlerts.map((alert) => (
-                <Card key={alert.id} className="shadow-card">
+                <Card key={alert.id} className="shadow-card gradient-card hover-lift animate-fade-in transition-smooth">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <Badge variant={getSeverityColor(alert.severity)}>
+                        <Badge variant={getSeverityColor(alert.severity)} className="shadow-glow">
                           {alert.type}
                         </Badge>
                         <div>
@@ -192,7 +201,7 @@ const AdminDashboard = () => {
                         <Badge variant="outline" className="capitalize">
                           {alert.status}
                         </Badge>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="hover:gradient-primary hover:text-primary-foreground transition-smooth">
                           <Eye className="w-4 h-4 mr-1" />
                           View
                         </Button>
@@ -216,11 +225,11 @@ const AdminDashboard = () => {
 
             <div className="grid md:grid-cols-2 gap-4">
               {touristClusters.map((cluster, index) => (
-                <Card key={index} className="shadow-card">
+                <Card key={index} className="shadow-card gradient-card hover-lift animate-fade-in transition-smooth">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-semibold text-foreground">{cluster.area}</h4>
-                      <Badge variant="outline" className={getRiskColor(cluster.risk)}>
+                      <Badge variant="outline" className={`${getRiskColor(cluster.risk)} shadow-glow`}>
                         {cluster.risk.toUpperCase()} RISK
                       </Badge>
                     </div>
@@ -233,20 +242,20 @@ const AdminDashboard = () => {
                       
                       <div className="w-full bg-muted rounded-full h-2">
                         <div 
-                          className={`h-2 rounded-full ${
-                            cluster.risk === 'high' ? 'bg-emergency' :
-                            cluster.risk === 'medium' ? 'bg-warning' : 'bg-success'
+                          className={`h-2 rounded-full transition-smooth ${
+                            cluster.risk === 'high' ? 'bg-emergency shadow-emergency' :
+                            cluster.risk === 'medium' ? 'bg-warning' : 'bg-success shadow-glow'
                           }`}
                           style={{ width: `${Math.min((cluster.count / 250) * 100, 100)}%` }}
                         />
                       </div>
                       
                       <div className="flex items-center justify-between mt-3">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="hover:gradient-primary hover:text-primary-foreground transition-smooth">
                           <MapPin className="w-4 h-4 mr-1" />
                           View Map
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="hover:gradient-emergency hover:text-emergency-foreground transition-smooth">
                           <AlertTriangle className="w-4 h-4 mr-1" />
                           Send Alert
                         </Button>
@@ -311,6 +320,7 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+      </div>
     </div>
   );
 };

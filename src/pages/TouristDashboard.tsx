@@ -56,7 +56,7 @@ const TouristDashboard = () => {
         backgroundAttachment: 'fixed'
       }}
     >
-      <div className="absolute inset-0 bg-background/70 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
       <div className="relative z-10">
         <Header />
       
@@ -72,21 +72,21 @@ const TouristDashboard = () => {
         </div>
 
         {/* Status Bar */}
-        <Card className="shadow-soft bg-gradient-card border-primary/20 hover-lift">
+        <Card className="shadow-soft gradient-hero border-primary/20 hover-lift animate-fade-in">
           <CardContent className="py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium">Real-time Tracking</span>
-                  <Badge variant={trackingEnabled ? "default" : "secondary"}>
+                  <MapPin className="w-4 h-4 text-primary-foreground" />
+                  <span className="text-sm font-medium text-primary-foreground">Real-time Tracking</span>
+                  <Badge variant={trackingEnabled ? "default" : "secondary"} className="shadow-glow">
                     {trackingEnabled ? "ON" : "OFF"}
                   </Badge>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Battery className="w-4 h-4 text-success" />
-                <span className="text-sm text-muted-foreground">Device: 85%</span>
+                <span className="text-sm text-primary-foreground/80">Device: 85%</span>
               </div>
             </div>
           </CardContent>
@@ -108,24 +108,24 @@ const TouristDashboard = () => {
             <WeatherWidget />
 
             {/* Nearby Emergency Services */}
-            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Navigation className="w-5 h-5 text-primary" />
+            <Card className="shadow-card gradient-card border-primary/20 hover-lift animate-fade-in">
+              <CardHeader className="gradient-accent rounded-t-lg">
+                <CardTitle className="flex items-center space-x-2 text-accent-foreground">
+                  <Navigation className="w-5 h-5" />
                   <span>Nearby Emergency Services</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-card">
                 <div className="space-y-3">
                   {nearbyServices.map((service, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                    <div key={index} className="flex items-center justify-between p-3 rounded-lg gradient-interactive border border-primary/10 hover-lift transition-smooth">
                       <div>
                         <p className="font-medium text-foreground">{service.name}</p>
                         <p className="text-sm text-muted-foreground">{service.type}</p>
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-medium text-primary">{service.distance}</p>
-                        <Button variant="outline" size="sm" className="mt-1">
+                        <Button variant="outline" size="sm" className="mt-1 shadow-glow hover:gradient-primary hover:text-primary-foreground transition-smooth">
                           Directions
                         </Button>
                       </div>
@@ -139,32 +139,32 @@ const TouristDashboard = () => {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Panic Button */}
-            <Card className="shadow-card bg-gradient-card border-emergency/20 hover-lift">
-              <CardHeader>
-                <CardTitle className="text-center text-emergency">Emergency Response</CardTitle>
+            <Card className="shadow-emergency gradient-emergency border-emergency/30 hover-lift animate-fade-in pulse-emergency">
+              <CardHeader className="bg-emergency/10 rounded-t-lg">
+                <CardTitle className="text-center text-emergency-foreground">Emergency Response</CardTitle>
               </CardHeader>
-              <CardContent className="py-6">
+              <CardContent className="py-6 bg-card">
                 <PanicButton />
               </CardContent>
             </Card>
 
             {/* Emergency Contacts */}
-            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Phone className="w-5 h-5 text-primary" />
+            <Card className="shadow-card gradient-card border-primary/20 hover-lift animate-fade-in">
+              <CardHeader className="gradient-accent rounded-t-lg">
+                <CardTitle className="flex items-center space-x-2 text-accent-foreground">
+                  <Phone className="w-5 h-5" />
                   <span>Emergency Contacts</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-card">
                 <div className="space-y-3">
                   {touristData.emergencyContacts.map((contact, index) => (
-                    <div key={index} className="flex items-center justify-between">
+                    <div key={index} className="flex items-center justify-between p-2 rounded-lg gradient-interactive hover-lift transition-smooth">
                       <div>
                         <p className="font-medium text-foreground">{contact.name}</p>
                         <p className="text-sm text-muted-foreground">{contact.number}</p>
                       </div>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="shadow-glow hover:gradient-primary hover:text-primary-foreground transition-smooth">
                         <Phone className="w-4 h-4" />
                       </Button>
                     </div>
@@ -174,17 +174,17 @@ const TouristDashboard = () => {
             </Card>
 
             {/* Quick Actions */}
-            <Card className="shadow-card bg-gradient-card border-primary/20 hover-lift">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Users className="w-5 h-5 text-primary" />
+            <Card className="shadow-card gradient-card border-primary/20 hover-lift animate-fade-in">
+              <CardHeader className="gradient-accent rounded-t-lg">
+                <CardTitle className="flex items-center space-x-2 text-accent-foreground">
+                  <Users className="w-5 h-5" />
                   <span>Quick Actions</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 bg-card">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                  className="w-full justify-start hover-lift gradient-interactive border-primary/30 shadow-glow transition-smooth hover:scale-105"
                   onClick={handleShareLocation}
                 >
                   <Share2 className="w-4 h-4 mr-2" />
@@ -192,21 +192,21 @@ const TouristDashboard = () => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                  className="w-full justify-start hover-lift gradient-interactive border-primary/30 shadow-glow transition-smooth hover:scale-105"
                 >
                   <Phone className="w-4 h-4 mr-2" />
                   Contact Guide
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start hover-lift bg-gradient-interactive border-primary/30"
+                  className="w-full justify-start hover-lift gradient-interactive border-primary/30 shadow-glow transition-smooth hover:scale-105"
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   AI Assistant
                 </Button>
                 <Button 
                   variant={trackingEnabled ? "secondary" : "default"}
-                  className="w-full justify-start hover-lift"
+                  className="w-full justify-start hover-lift transition-smooth hover:scale-105"
                   onClick={() => setTrackingEnabled(!trackingEnabled)}
                 >
                   <Navigation className="w-4 h-4 mr-2" />
